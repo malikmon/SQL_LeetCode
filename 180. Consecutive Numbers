@@ -75,3 +75,4 @@ having count(conSecutiveGrp) >= 3
 Solution 3 will work for more than 3 consecutive numbers
 
 
+https://leetcode.com/problems/consecutive-numbers/solutions/1444382/window-function-with-partition-flexible-with-any-consecutive-numbers/?page=5
