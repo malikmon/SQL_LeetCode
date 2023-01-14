@@ -42,11 +42,13 @@ Output:
 Explanation: 1 is the only number that appears consecutively for at least three times.
 
 Brute Force Approach would be self join
+solution 1
 select distinct l1.num from logs l1,logs l2,logs l3
 where l1.id = l2.id+1 and l2.Id=l3.Id+1
 and l1.Num=l2.Num and l2.Num=l3.Num
 
-solution using Analytical Function
+solution 2
+using Analytical Function
 with cte as (
 select
     num,
@@ -57,3 +59,19 @@ from logs)
 select distinct num as ConsecutiveNums
 from cte
 where num = prevRw and num = nextRw
+
+solution 3
+with cte as (select
+num,
+cast(id as SIGNED) - cast(row_number() over (partition by num order by id) as SIGNED) as conSecutiveGrp
+from 
+logs )
+
+select distinct num as ConsecutiveNums
+from cte
+group by num, conSecutiveGrp
+having count(conSecutiveGrp) >= 3
+
+Solution 3 will work for more than 3 consecutive numbers
+
+
