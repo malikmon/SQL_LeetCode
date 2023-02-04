@@ -1,2 +1,2 @@
 # SQL_LeetCode
-All SQL Leetcode problem with solution
+All SQL Leetcode problems with solutions
