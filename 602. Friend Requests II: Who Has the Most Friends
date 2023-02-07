@@ -42,3 +42,19 @@ The person with id 3 is a friend of people 1, 2, and 4, so he has three friends 
  
 
 Follow up: In the real world, multiple people could have the same most number of friends. Could you find all these people in this case?
+
+with cte as (
+    select requester_id as user,
+           accepter_id as friend
+    from RequestAccepted
+    union
+    select accepter_id as user,
+            requester_id as friend
+    from RequestAccepted )
+
+select user as id,
+count(distinct friend) as num
+ from cte
+ group by user
+ order by num desc
+limit 1
