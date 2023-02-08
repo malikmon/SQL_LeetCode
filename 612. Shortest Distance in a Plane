@@ -41,3 +41,16 @@ from
 (select ROUND(SQRT(((p2.x - p1.x)*(p2.x - p1.x)) + ((p2.y - p1.y)*(p2.y - p1.y))),2) as shortest
 from point2d p1 cross join point2d p2)tmp
 where shortest <> 0
+
+
+# Write your MySQL query statement below
+with cte as (
+    select x, y, row_number() over() rnk from point2d
+)
+
+select round(min(dist), 2) shortest
+from (
+    select sqrt(power(b.x - a.x, 2) + power(b.y - a.y, 2)) dist
+    from cte a, cte b
+    where a.rnk != b.rnk
+) a
