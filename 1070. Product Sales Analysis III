@@ -73,3 +73,23 @@ quantity,
 price 
 from sales s inner join firstYearProduct f on
 s.product_id = f.product_id and s.year = f.first_year
+
+#Second Solution
+
+WITH CTE AS
+(
+SELECT
+    product_id,
+    year,
+    quantity,
+    price,
+    dense_rank() over(partition by product_id order by year asc) as rnk
+FROM Sales
+)
+
+SELECT
+     product_id,
+    year AS first_year,
+    quantity,
+    price
+FROM CTE where rnk = 1
