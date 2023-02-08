@@ -90,3 +90,17 @@ on s.product_id=p.product_id where product_name='iPhone'
 )
 
 select buyer_id from buyer_s8 where buyer_id not in (select buyer_id from buyer_iphone)
+
+
+select distinct s.buyer_id
+from sales s left join product p 
+on s.product_id = p.product_id
+where p.product_name = "S8"
+and s.buyer_id not in 
+(
+    # list of customers who bought iphones
+    select distinct s.buyer_id
+    from sales s left join product p
+    on s.product_id = p.product_id
+    where p.product_name = "iPhone" 
+)
